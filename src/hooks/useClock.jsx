@@ -9,34 +9,51 @@ const init = {
     type: "",
     offset: "",
   },
-  date_utc0: null,
+  date_utc: null,
   date: null,
 };
 
 const TIME_ZONE_OFFSET = {
   PST: -7 * 60,
   EST: -4 * 60,
+  EDT: -4 * 60,
+  BST: 1 * 60,
+  MST: -6 * 60,
 };
 
-const useClock = (label, timezone, offset = 0) => {
+const useClock = (timezone, offset = 0) => {
   const [state, setState] = useState({ ...init });
+  const [utc, setUtc] = useState(null);
 
   useEffect(() => {
-    let utc = new Date();
-    const localOffset = utc.getTimezoneOffset();
-    utc = addMinutes(utc, localOffset);
-
-    if (timezone) {
-      if (timezone === "PST" || timezone === "EST") {
-        offset = TIME_ZONE_OFFSET[timezone];
-      }
-      utc = addMinutes(utc, offset);
-      console.log(label, utc);
-      return;
-    }
-
-    console.log(label, utc);
+    let date = new Date();
+    const localOffset = date.getTimezoneOffset();
+    date = addMinutes(date, localOffset);
+    setUtc(date);
   }, []);
+
+  useEffect(() => {
+    if (utc !== null && timezone) {
+      offset = TIME_ZONE_OFFSET[timezone] ?? offset;
+
+      const newUTC = addMinutes(utc, offset);
+      setState({
+        ...state,
+        timezone: {
+          type: timezone,
+          offset: offset,
+        },
+        date: newUTC,
+        date_utc: utc,
+      });
+    } else {
+      setState({
+        ...state,
+        date: utc,
+        date_utc: utc,
+      });
+    }
+  }, [utc]);
 
   // Return the state and updater function
   return {
