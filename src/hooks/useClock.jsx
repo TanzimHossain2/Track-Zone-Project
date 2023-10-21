@@ -1,18 +1,6 @@
 import { useState, useEffect } from "react";
 import { addMinutes } from "date-fns";
 
-// Define your initial state
-const init = {
-  id: "",
-  title: "",
-  timezone: {
-    type: "",
-    offset: "",
-  },
-  date_utc: null,
-  date: null,
-};
-
 const TIME_ZONE_OFFSET = {
   PST: -7 * 60,
   EST: -4 * 60,
@@ -22,42 +10,44 @@ const TIME_ZONE_OFFSET = {
 };
 
 const useClock = (timezone, offset = 0) => {
-  const [state, setState] = useState({ ...init });
+  const [localDate, setLocalDate] = useState(null);
+  const [localOffset, setLocalOffset] = useState(0);
+  const [localTimezone, setLocalTimezone] = useState("");
   const [utc, setUtc] = useState(null);
 
   useEffect(() => {
     let date = new Date();
-    const localOffset = date.getTimezoneOffset();
-    date = addMinutes(date, localOffset);
+    const lo = date.getTimezoneOffset();
+    date = addMinutes(date, lo);
     setUtc(date);
+    setLocalOffset(lo);
   }, []);
 
   useEffect(() => {
-    if (utc !== null && timezone) {
-      offset = TIME_ZONE_OFFSET[timezone] ?? offset;
+    if (utc !== null) {
+      if (timezone) {
+        offset = TIME_ZONE_OFFSET[timezone] ?? offset;
 
-      const newUTC = addMinutes(utc, offset);
-      setState({
-        ...state,
-        timezone: {
-          type: timezone,
-          offset: offset,
-        },
-        date: newUTC,
-        date_utc: utc,
-      });
-    } else {
-      setState({
-        ...state,
-        date: utc,
-        date_utc: utc,
-      });
+        const newUTC = addMinutes(utc, offset);
+        setLocalDate(newUTC);
+      } else {
+        const localUTC = addMinutes(utc, -localOffset);
+        const dateStrArr = localUTC.toUTCString().split(" "); 
+        setLocalDate(localUTC);
+
+        setLocalTimezone(dateStrArr.pop()); // peak timezone 
+      }
     }
   }, [utc]);
 
   // Return the state and updater function
   return {
-    Clock: state,
+    date: localDate,
+    dateUTC: utc,
+    offset,
+    timezone,
+    localOffset,
+    localTimezone,
   };
 };
 
