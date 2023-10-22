@@ -38,7 +38,7 @@ const useClock = (timezone, offset) => {
         setLocalTimezone(dateStrArr.pop()); // peak timezone
       }
     }
-  }, [utc]);
+  }, [utc,timezone,offset]);
 
   // Return the state and updater function
   return {

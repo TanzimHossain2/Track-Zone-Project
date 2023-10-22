@@ -27,9 +27,18 @@ const LocalClock = ({ clock, updateClock }) => {
         offset={offset}
       />
       )}
-      <ClockActions local={true} />
+      <ClockActions local={true} clock={clock} updateClock={updateClock} />
     </div>
   );
+};
+
+LocalClock.propTypes = {
+  clock: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    timezone: PropTypes.string.isRequired,
+    offset: PropTypes.number.isRequired,
+  }).isRequired,
+  updateClock: PropTypes.func.isRequired,
 };
 
 
