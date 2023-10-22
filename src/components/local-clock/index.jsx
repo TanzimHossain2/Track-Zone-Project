@@ -1,23 +1,36 @@
 import PropTypes from "prop-types";
 import ClockDisplay from "../shared/clock-display";
+import ClockActions from "../shared/clock-action";
+import useClock from "../../hooks/useClock";
+import { useEffect } from "react";
 
-const LocalClock = ({ date, timezone, offset }) => {
+const LocalClock = ({ clock, updateClock }) => {
+
+  const { date,  timezone, offset } = useClock(
+    clock.timezone,
+    clock.offset
+  );
+
+  useEffect(() =>{
+    if (date) {
+      updateClock({ date, timezone, offset });
+    }
+  },[date]);
+
   return (
     <div>
-      <ClockDisplay
+      {date && (
+        <ClockDisplay
         date={date}
-        title={"My Clock"}
+        title={clock.title}
         timezone={timezone}
         offset={offset}
       />
+      )}
+      <ClockActions local={true} />
     </div>
   );
 };
 
-LocalClock.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  timezone: PropTypes.string.isRequired,
-  offset: PropTypes.number.isRequired,
-};
 
 export default LocalClock;

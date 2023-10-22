@@ -9,7 +9,7 @@ const TIME_ZONE_OFFSET = {
   MST: -6 * 60,
 };
 
-const useClock = (timezone, offset = 0) => {
+const useClock = (timezone, offset) => {
   const [localDate, setLocalDate] = useState(null);
   const [localOffset, setLocalOffset] = useState(0);
   const [localTimezone, setLocalTimezone] = useState("");
@@ -32,10 +32,10 @@ const useClock = (timezone, offset = 0) => {
         setLocalDate(newUTC);
       } else {
         const localUTC = addMinutes(utc, -localOffset);
-        const dateStrArr = localUTC.toUTCString().split(" "); 
+        const dateStrArr = localUTC.toUTCString().split(" ");
         setLocalDate(localUTC);
 
-        setLocalTimezone(dateStrArr.pop()); // peak timezone 
+        setLocalTimezone(dateStrArr.pop()); // peak timezone
       }
     }
   }, [utc]);
@@ -44,10 +44,8 @@ const useClock = (timezone, offset = 0) => {
   return {
     date: localDate,
     dateUTC: utc,
-    offset,
-    timezone,
-    localOffset,
-    localTimezone,
+    offset: offset || -localOffset,
+    timezone: timezone || localTimezone,
   };
 };
 

@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
+import { format } from "date-fns";
 
 const ClockDisplay = ({ date, title, timezone, offset }) => {
   let localoffset = offset / 60;
   return (
     <div>
       <h1>{title}</h1>
-      <h3>{date.toString()}</h3>
+      <h3>{format(date, "yyyy-MM-dd hh:mm:ss a")}</h3>
       <p>
         {timezone} |{" "}
         {localoffset > 0
