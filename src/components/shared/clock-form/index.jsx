@@ -4,17 +4,27 @@
  * 3. for edit we will have title, timezone, offset
  */
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getOffset } from "../../../utils/timezone";
+import { TIME_ZONE_OFFSET } from "../../../CONSTANT/timezone";
 
-// const values={
-//     title:'',
-//     timezone:'',
-//     offset:0
-// }
+const defValues={
+    title:'',
+    timezone:'UTC',
+    offset:0
+}
 
-const ClockForm = ({ values, handleClock, title = true, edit = false }) => {
+const ClockForm = ({ values=defValues, handleClock, title = true, edit = false }) => {
   const [formValues, setFormValues] = useState(values);
+
+    useEffect(()=>{
+        if(TIME_ZONE_OFFSET[formValues.timezone]){
+            setFormValues(pre=>({
+                ...pre,
+                offset:TIME_ZONE_OFFSET[formValues.timezone]
+            }))
+        }
+    },[formValues.timezone])
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -51,17 +61,25 @@ const ClockForm = ({ values, handleClock, title = true, edit = false }) => {
 
         <div>
           <label htmlFor="timezone">Enter Timezone</label>
-          <input
-            type="text"
+
+          <select
             name="timezone"
-            id="timezone"
             value={formValues.timezone}
             onChange={handleChange}
-          />
+            id="timezone"
+          >
+            <option value="GMT">GMT</option>
+            <option value="UTC">UTC</option>
+            <option value="EST">EST</option>
+            <option value="MST">MST</option>
+            <option value="PST">PST</option>
+            <option value="EDT">EDT</option>
+            <option value="BST">BST</option>
+          </select>
         </div>
 
+        {/* This is part for offset*/}
         {(formValues.timezone == "GMT" || formValues.timezone == "UTC") && (
-         
           <div>
             <label htmlFor="offset">Enter Offset</label>
 
@@ -87,5 +105,16 @@ const ClockForm = ({ values, handleClock, title = true, edit = false }) => {
     </>
   );
 };
+
+ClockForm.propTypes = {
+    values: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        timezone: PropTypes.string.isRequired,
+        offset: PropTypes.number.isRequired,
+    }),
+    handleClock: PropTypes.func.isRequired,
+    title: PropTypes.bool,
+    edit: PropTypes.bool,
+    };
 
 export default ClockForm;
