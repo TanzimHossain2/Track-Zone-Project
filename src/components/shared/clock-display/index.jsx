@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import classes from './index.module.css'
+import classes from "./index.module.css";
 
 const ClockDisplay = ({ date, title, timezone, offset }) => {
   let localoffset = offset / 60;

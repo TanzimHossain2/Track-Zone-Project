@@ -2,13 +2,19 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import ClockForm from "../clock-form";
 
-const ClockActions = ({ local = false, clock, updateClock,createClock }) => {
+const ClockActions = ({
+  local = false,
+  clock,
+  updateClock,
+  createClock,
+  deleteClock,
+}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
 
-  const createHandleClock =(values)=>{
+  const createHandleClock = (values) => {
     createClock(values);
-  }
+  };
 
   return (
     <div>
@@ -16,7 +22,7 @@ const ClockActions = ({ local = false, clock, updateClock,createClock }) => {
       {local ? (
         <button onClick={() => setIsCreate(!isCreate)}>Create</button>
       ) : (
-        <button>Delete</button>
+        <button onClick={() => deleteClock(clock.id)}>Delete</button>
       )}
       {isEdit && (
         <>
@@ -30,26 +36,22 @@ const ClockActions = ({ local = false, clock, updateClock,createClock }) => {
         </>
       )}
 
-      {isCreate && 
-      <>
-      <h3>Create a New Clock</h3>
-      <ClockForm 
-      handleClock={createHandleClock}
-      />
-      </>
-      }
+      {isCreate && (
+        <>
+          <h3>Create a New Clock</h3>
+          <ClockForm handleClock={createHandleClock} />
+        </>
+      )}
     </div>
   );
 };
 
 ClockActions.propTypes = {
   local: PropTypes.bool,
-  clock: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    timezone: PropTypes.string.isRequired,
-    offset: PropTypes.number.isRequired,
-  }).isRequired,
-  updateClock: PropTypes.func.isRequired,
+  clock: PropTypes.object,
+  updateClock: PropTypes.func,
+  createClock: PropTypes.func,
+  deleteClock: PropTypes.func,
 };
 
 export default ClockActions;

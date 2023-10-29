@@ -8,23 +8,28 @@ import { useEffect, useState } from "react";
 import { getOffset } from "../../../utils/timezone";
 import { TIME_ZONE_OFFSET } from "../../../CONSTANT/timezone";
 
-const defValues={
-    title:'',
-    timezone:'UTC',
-    offset:0
-}
+const defValues = {
+  title: "",
+  timezone: "UTC",
+  offset: 0,
+};
 
-const ClockForm = ({ values=defValues, handleClock, title = true, edit = false }) => {
+const ClockForm = ({
+  values = defValues,
+  handleClock,
+  title = true,
+  edit = false,
+}) => {
   const [formValues, setFormValues] = useState(values);
 
-    useEffect(()=>{
-        if(TIME_ZONE_OFFSET[formValues.timezone]){
-            setFormValues(pre=>({
-                ...pre,
-                offset:TIME_ZONE_OFFSET[formValues.timezone]
-            }))
-        }
-    },[formValues.timezone])
+  useEffect(() => {
+    if (TIME_ZONE_OFFSET[formValues.timezone]) {
+      setFormValues((pre) => ({
+        ...pre,
+        offset: TIME_ZONE_OFFSET[formValues.timezone],
+      }));
+    }
+  }, [formValues.timezone]);
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -107,14 +112,14 @@ const ClockForm = ({ values=defValues, handleClock, title = true, edit = false }
 };
 
 ClockForm.propTypes = {
-    values: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        timezone: PropTypes.string.isRequired,
-        offset: PropTypes.number.isRequired,
-    }),
-    handleClock: PropTypes.func.isRequired,
-    title: PropTypes.bool,
-    edit: PropTypes.bool,
-    };
+  values: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    timezone: PropTypes.string.isRequired,
+    offset: PropTypes.number.isRequired,
+  }),
+  handleClock: PropTypes.func.isRequired,
+  title: PropTypes.bool,
+  edit: PropTypes.bool,
+};
 
 export default ClockForm;
