@@ -1,7 +1,7 @@
 import ClockListItem from "./clock-list-item";
 import PropTypes from "prop-types";
 
-const ClockList = ({ clocks, updateClock, deleteClock }) => {
+const ClockList = ({ clocks, updateClock, deleteClock, localClock }) => {
   return (
     <>
       <div>
@@ -17,6 +17,7 @@ const ClockList = ({ clocks, updateClock, deleteClock }) => {
                 clock={clock}
                 updateClock={updateClock}
                 deleteClock={deleteClock}
+                localClock={localClock}
               />
             ))}
           </div>
@@ -30,6 +31,7 @@ ClockList.propTypes = {
   clocks: PropTypes.array.isRequired,
   updateClock: PropTypes.func.isRequired,
   deleteClock: PropTypes.func.isRequired,
+  localClock: PropTypes.object.isRequired,
 };
 
 export default ClockList;

@@ -50,6 +50,7 @@ function App() {
 
       <ClockList
         clocks={clocks}
+        localClock={localClock}
         updateClock={updateClock}
         deleteClock={handleDeleteClock}
       />

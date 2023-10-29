@@ -1,3 +1,4 @@
+
 # Track Zone
 
 A time tracking app built with React
@@ -11,6 +12,7 @@ A time tracking app built with React
 - [Usage](#usage)
 - [Development](#development)
 - [Contributing](#contributing)
+- [Project Plan](#project-plan)
 - [License](#license)
 
 ## About
@@ -54,7 +56,7 @@ To start the development server and run the app locally, use the following comma
 yarn dev
 ```
 
-The app will be accessible at `http://localhost:5173/ `.
+The app will be accessible at `http://localhost:5173/`.
 
 ## Development
 
@@ -79,6 +81,22 @@ The app will be accessible at `http://localhost:5173/ `.
 ## Contributing
 
 Contributions are welcome! Feel free to open issues and pull requests to improve this project.
+
+## Project Plan
+
+This section contains the breakdown of our project and relevant diagrams. The project structure is as follows:
+
+```
+📦Project Plan
+ ┣ 📂diagrams
+ ┃ ┗ 📜Track Zone Diagrams.drawio
+ ┗ 📜ProjectBreakdown.md
+```
+
+You can access specific components of the Project Plan here:
+
+- [Track Zone Diagrams](diagrams/Track%20Zone%20Diagrams.drawio)
+- [Project Breakdown](ProjectBreakdown.md)
 
 ## License
 
