@@ -2,12 +2,12 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import ClockForm from "../clock-form";
 
-const ClockActions = ({ local = false, clock, updateClock }) => {
+const ClockActions = ({ local = false, clock, updateClock,createClock }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
 
   const createHandleClock =(values)=>{
-    console.log(values);
+    createClock(values);
   }
 
   return (
