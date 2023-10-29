@@ -95,8 +95,8 @@ This section contains the breakdown of our project and relevant diagrams. The pr
 
 You can access specific components of the Project Plan here:
 
-- [Track Zone Diagrams](diagrams/Track%20Zone%20Diagrams.drawio)
-- [Project Breakdown](ProjectBreakdown.md)
+- [Track Zone Diagrams](https://github.com/TanzimHossain2/Track-Zone-Project/tree/main/Project%20Plan/diagrams/Track%20Zone%20Diagrams.drawio)
+- [Project Breakdown](https://github.com/TanzimHossain2/Track-Zone-Project/tree/main/Project%20Plan/ProjectBreakdown.md)
 
 ## License
 
